@@ -5,7 +5,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building Student Registration HTML...'
+                echo 'Building Student Registration Project...'
                 bat 'dir'
             }
         }
@@ -27,10 +27,18 @@ pipeline {
                 findstr /C:"<input" index.html >nul
                 if errorlevel 1 exit /b 1
 
+                findstr /C:"<select" index.html >nul
+                if errorlevel 1 exit /b 1
+
+                findstr /C:"<textarea" index.html >nul
+                if errorlevel 1 exit /b 1
+
                 findstr /C:"<button" index.html >nul
                 if errorlevel 1 exit /b 1
 
-                echo HTML TEST PASSED
+                echo ==============================
+                echo ALL HTML TESTS PASSED
+                echo ==============================
                 '''
             }
         }
@@ -42,7 +50,7 @@ pipeline {
         }
 
         failure {
-            echo 'HTML Test Failed!'
+            echo 'Build or HTML Test Failed!'
         }
     }
 }

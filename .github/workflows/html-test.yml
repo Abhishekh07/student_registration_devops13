@@ -1,22 +1,56 @@
 name: Student Registration Test
 
 on:
-    push:
-    pull_request:
+  push:
+  pull_request:
 
 jobs:
   test-html:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
 
-      - name: Run HTML Tests
-        run: python test.py
+      - name: Test HTML File
+        run: |
+          echo "Checking index.html..."
+
+          test -f index.html || {
+            echo "ERROR: index.html not found"
+            exit 1
+          }
+
+          grep -q "<html" index.html || {
+            echo "ERROR: <html> tag missing"
+            exit 1
+          }
+
+          grep -q "<form" index.html || {
+            echo "ERROR: <form> tag missing"
+            exit 1
+          }
+
+          grep -q "<input" index.html || {
+            echo "ERROR: <input> tag missing"
+            exit 1
+          }
+
+          grep -q "<select" index.html || {
+            echo "ERROR: <select> tag missing"
+            exit 1
+          }
+
+          grep -q "<textarea" index.html || {
+            echo "ERROR: <textarea> tag missing"
+            exit 1
+          }
+
+          grep -q "<button" index.html || {
+            echo "ERROR: <button> tag missing"
+            exit 1
+          }
+
+          echo "=============================="
+          echo "ALL HTML TESTS PASSED"
+          echo "=============================="
